@@ -6,21 +6,21 @@ public class Controller {
     private IEffectenBeurs effectenbeurs;
     private Timer pollingTimer;
 
-    public Controller(AEXBanner banner) {
-
+    public Controller(AEXBanner banner) throws InterruptedException {
         this.banner = banner;
         this.effectenbeurs = new MockEffectenBeurs();
 
         // Start polling timer: update banner every two seconds
         pollingTimer = new Timer();
-        // TODO
+        banner.setKoersen(effectenbeurs.getKoersen().toString());
+        pollingTimer.wait(2000);
     }
 
     // Stop banner controller
-    public void stop() {
+    public void stop() throws InterruptedException {
         pollingTimer.cancel();
-        // Stop simulation timer of effectenbeurs
-        // TODO
+        // Stop simulation timer of Effectenbeurs
+        effectenbeurs.wait();
     }
 
 }

@@ -21,7 +21,7 @@ public class AEXBanner extends Application {
     private AnimationTimer animationTimer;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws InterruptedException {
         controller = new Controller(this);
 
         Font font = new Font("Arial", HEIGHT);
@@ -47,7 +47,7 @@ public class AEXBanner extends Application {
                 long lag = now - prevUpdate;
                 if (lag >= NANO_TICKS) {
                     // calculate new location of text
-                    // TODO
+                    textPosition = textPosition - 2;
                     text.relocate(textPosition, 0);
                     prevUpdate = now;
                 }
@@ -71,7 +71,7 @@ public class AEXBanner extends Application {
     }
 
     @Override
-    public void stop() {
+    public void stop() throws InterruptedException {
         animationTimer.stop();
         controller.stop();
     }
