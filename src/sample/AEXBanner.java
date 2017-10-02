@@ -8,9 +8,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class AEXBanner extends Application {
     public static final int WIDTH = 1000;
-    public static final int HEIGHT = 100;
+    public static final int HEIGHT = 110;
     public static final int NANO_TICKS = 20000000;
     // FRAME_RATE = 1000000000/NANO_TICKS = 50;
 
@@ -21,22 +24,24 @@ public class AEXBanner extends Application {
     private AnimationTimer animationTimer;
 
     @Override
-    public void start(Stage primaryStage) throws InterruptedException {
+    public void start(Stage primaryStage) throws Exception {
         controller = new Controller(this);
 
-        Font font = new Font("Arial", HEIGHT);
+        Font font = new Font("Arial", HEIGHT-10);
         text = new Text();
         text.setFont(font);
-        text.setFill(Color.BLACK);
+        text.setFill(Color.WHEAT);
 
         Pane root = new Pane();
         root.getChildren().add(text);
         Scene scene = new Scene(root, WIDTH, HEIGHT);
+        scene.setFill(Color.BLACK);
 
         primaryStage.setTitle("AEX banner");
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.toFront();
+
 
         // Start animation: text moves from right to left
         animationTimer = new AnimationTimer() {
@@ -47,7 +52,7 @@ public class AEXBanner extends Application {
                 long lag = now - prevUpdate;
                 if (lag >= NANO_TICKS) {
                     // calculate new location of text
-                    textPosition = textPosition - 2;
+                    textPosition = textPosition - 8;
                     text.relocate(textPosition, 0);
                     prevUpdate = now;
                 }
@@ -58,7 +63,8 @@ public class AEXBanner extends Application {
                 prevUpdate = System.nanoTime();
                 textPosition = WIDTH;
                 text.relocate(textPosition, 0);
-                setKoersen("Nothing to display");
+                //setKoersen("Nothing to display");
+                setKoersen(controller.updateKoersen());
                 super.start();
             }
         };
@@ -75,5 +81,4 @@ public class AEXBanner extends Application {
         animationTimer.stop();
         controller.stop();
     }
-
 }

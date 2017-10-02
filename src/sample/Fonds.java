@@ -21,7 +21,7 @@ public class Fonds implements IFonds  {
             public void run() {
                 SetKoers();
             }
-        },0,1000);
+        },0,1500);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Fonds implements IFonds  {
         return random.nextInt(100);
     }
 
-    public String ToString(){
+    public String toString(){
         return naam +" "+ koers;
     }
 }
